@@ -1,0 +1,56 @@
+<template>
+    <lightning-card title="Accounts Table New" icon-name="standard:accounts">
+      <!-- <template if:true={btnVisible}>
+        <div class="slds-m-vertical_medium">
+            These are the details!
+        </div>
+    </template> -->
+        <div class="btn-delete">
+            <lightning-button class="slds-button slds-button_destructive" label="Delete" variant="Destructive"
+                onclick={handleModal}></lightning-button> 
+        </div>
+
+      <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid" aria-label="Table of Accounts">
+
+          <thead>
+            <tr >
+              <th class="slds-text-align_right slds-cell_action-mode" scope="col" style="width:3.25rem">
+                <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
+                <div class="slds-th__action slds-th__action_form">
+                  <div class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-unique-id-297" value="checkbox-unique-id-297" tabindex="0" aria-labelledby="check-select-all-label column-group-header" />
+                    <label class="slds-checkbox__label" for="checkbox-unique-id-297" id="check-select-all-label">
+                      <span class="slds-checkbox_faux"></span>
+                      <span class="slds-form-element__label slds-assistive-text">Select All</span>
+                    </label>
+                  </div>
+                </div>
+              </th>
+              <th>Account Name</th>
+              <th>Phone</th>
+              <th>Annual Revenue</th>
+            </tr>
+          </thead>
+
+          <tbody aria-multiselectable="true">
+            <template for:each={accounts.data} for:item="acc">
+              <tr aria-multiselectable="true" key={acc.Id}>
+                <td class="slds-text-align_right slds-cell_action-mode" role="gridcell">
+                  <lightning-input type="checkbox" label="" name={acc}
+                    onchange={getAccIds}>
+                  </lightning-input>
+                </td>
+                <td>{acc.Name}</td>
+                <td>{acc.Phone}</td>
+                <td>{acc.AnnualRevenue}</td>
+              </tr>
+          </template>
+          </tbody>
+
+        </table>
+        <template if:true={isModalOpen}>
+            <c-child-table-display acc-ids-from-parent ={accIds} onmodalstatus={handleModalStatus}></c-child-table-display>
+        </template>
+
+    </lightning-card>
+</template>
