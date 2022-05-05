@@ -1,5 +1,8 @@
 import { LightningElement, wire, api } from 'lwc';
 import getAccounts from '@salesforce/apex/accountClass.getAccounts';
+import { deleteRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
 
 export default class ParentTableDisplay extends LightningElement {
     @wire(getAccounts)
@@ -44,28 +47,38 @@ export default class ParentTableDisplay extends LightningElement {
     handleModalStatus(event){
         this.isModalOpen = event.detail.modelOpen;
         this.accIdsFromChild = event.detail.accIdfromChild;
-        
+
         console.log("Account Ids before delete from parent",this.accIdsFromChild);
-        this.accIdsFromChild.forEach(acc => {
+        // this.accIdsFromChild.then(response => response.json())
+        // .then()
+        this.accIdsFromChild.forEach(acc => console.log("account:",acc.Name));
+        
+        /*
+        try {
+            this.accIdsFromChild.forEach(acc => {
             
-            deleteRecord(acc.Id)
-            .then(() => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Success',
-                        message: 'Record deleted successfully',
-                        variant: 'success'
-                    })
-                );
-                return refreshApex(acc);
-                
-            })
-            .catch(error => {
-                console.log(error);
-                alert("Cannot delete this account"); 
+                deleteRecord(acc.Id)
+                .then(() => {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: 'Record deleted successfully',
+                            variant: 'success'
+                        })
+                    );
+                    return refreshApex(acc);
+                    
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert("Cannot delete this account"); 
+                });
             });
-        });
-        console.log("Account Ids after delete from parent",this.accIdsFromChilds);
+        } catch (error) {
+            console.log(error);
+        }
+        */
+        // console.log("Account Ids after delete from parent",this.accIdsFromChilds);
 
     }
         

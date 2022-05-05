@@ -21,25 +21,31 @@ export default class ChildTableDisplay extends LightningElement {
     }
 
     handleCancel(e){
-        console.log(e.target.name);
+        console.log("In Handle cancel",e.target.name);
         this.accIdsFromParent.splice(this.accIdsFromParent.indexOf(e.target.name), 1);
         console.log("Handle cancel",this.accIdsFromParent);
     }
 
     confirmDeleteAccount(event) {
        
-        alert("Following selected accounts will be deleted");
         this.isModalOpen = false;
+        alert("Following selected accounts will be deleted");
+        console.log("In confirmDeleteAccount",this.accIdsFromParent);   
+        
         const modalStatusEvent = new CustomEvent("modalstatus",{
             detail: {
                 modelOpen :this.isModalOpen,
                 accIdfromChild :this.accIdsFromParent
             }
         });
-        this.dispatchEvent(modalStatusEvent);
-        console.log(this.accIdsFromParent);   
+        try {
+            
+            this.dispatchEvent(modalStatusEvent);
+        } catch (error) {
+            console.log(error);
+        }
 
-        console.log("Account Ids before delete in child",this.accIdsFromParent);
+        // console.log("Account Ids before delete in child",this.accIdsFromParent);
 
     }
 }
