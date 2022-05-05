@@ -21,9 +21,11 @@ export default class ChildTableDisplay extends LightningElement {
     }
 
     handleCancel(e){
-        console.log("In Handle cancel",e.target.name);
-        this.accIdsFromParent.splice(this.accIdsFromParent.indexOf(e.target.name), 1);
-        console.log("Handle cancel",this.accIdsFromParent);
+        console.log("In handleCcancel",e.target.name.Name);
+        // this.accIdsFromParent.splice(this.accIdsFromParent.indexOf(e.target.name), 1);
+
+        this.accIdsFromParent = this.accIdsFromParent.filter((item) => item.Id !== e.target.name.Id);
+        console.log("handleCancel",this.accIdsFromParent);
     }
 
     confirmDeleteAccount(event) {

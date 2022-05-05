@@ -53,7 +53,6 @@ export default class ParentTableDisplay extends LightningElement {
         // .then()
         this.accIdsFromChild.forEach(acc => console.log("account:",acc.Name));
         
-        /*
         try {
             this.accIdsFromChild.forEach(acc => {
             
@@ -77,7 +76,6 @@ export default class ParentTableDisplay extends LightningElement {
         } catch (error) {
             console.log(error);
         }
-        */
         // console.log("Account Ids after delete from parent",this.accIdsFromChilds);
 
     }
