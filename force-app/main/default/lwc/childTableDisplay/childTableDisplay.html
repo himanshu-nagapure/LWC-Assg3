@@ -4,6 +4,7 @@
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
+
                 <!-- Modal/Popup Box LWC header here -->
                 <header class="slds-modal__header">
                     <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
@@ -12,15 +13,17 @@
                         </lightning-icon>
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <!-- <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{accName}
-                    </h2> -->
                 </header>
+                
                 <!-- Modal/Popup Box LWC body starts here -->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <template if:true={accIdsFromParent}>
                     <template for:each={accIdsFromParent} for:item="acc">
                           <div key={acc.Id}>
-                            {acc.Name}
+                            {acc.Name}   
+                            <lightning-button icon-name="action:delete" name ={acc} onclick={handleCancel} class="slds-p-around_medium"></lightning-button>
                         </div>
+                    </template>
                     </template>
                     <br/>
                     <p><b>Are you sure you want to delete these account records ? 
@@ -30,7 +33,7 @@
                
                 <div class="slds-modal__footer">
                     <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
-                    <button class="slds-button slds-button_brand" onclick={deleteAccount} value={accId} title="Delete">Delete</button>
+                    <button class="slds-button slds-button_brand" onclick={confirmDeleteAccount} title="Delete">Delete</button>
                 </div>
             </div>
         </section>

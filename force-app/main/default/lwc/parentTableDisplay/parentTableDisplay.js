@@ -6,8 +6,9 @@ export default class ParentTableDisplay extends LightningElement {
     accounts;
 
     @api isModalOpen = false;
-
     @api accIds = [];
+    @api accIdsFromChild = [];
+
     // btnVisible = false;
     getAccIds(e) {
         console.log("Watch Target ",e);
@@ -27,23 +28,45 @@ export default class ParentTableDisplay extends LightningElement {
         console.log("Account Ids in making",this.accIds);
     }
     
-    handleModal(event) {
+    handleModal() {
         console.log("Delete Button CLicked");
         this.isModalOpen = true;
-        try {
+        // try {
             
-            this.template.querySelector('c-child-table-display').passAccIds(this.accIds);
-        } catch (error) {
-            console.log(error);
+        //     this.template.querySelector('c-child-table-display').passAccIds(this.accIds);
+        //     console.log("Data successfully passed to child");
+        // } catch (error) {
+        //     console.log(error);
 
-        }
-        console.log("Delete Button CLicked 2");
-
-        // this.accName = event.currentTarget.dataset.name;
-        // this.accId = event.currentTarget.dataset.id;
+        // }
     }
+
     handleModalStatus(event){
-        this.isModalOpen = event.detail;
+        this.isModalOpen = event.detail.modelOpen;
+        this.accIdsFromChild = event.detail.accIdfromChild;
+        
+        console.log("Account Ids before delete from parent",this.accIdsFromChild);
+        this.accIdsFromChild.forEach(acc => {
+            
+            deleteRecord(acc.Id)
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Record deleted successfully',
+                        variant: 'success'
+                    })
+                );
+                return refreshApex(acc);
+                
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Cannot delete this account"); 
+            });
+        });
+        console.log("Account Ids after delete from parent",this.accIdsFromChilds);
 
     }
+        
 }
